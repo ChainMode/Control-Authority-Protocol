@@ -1,6 +1,6 @@
 <!-- Date de Mise à Jour : 2026-05-27 -->
 
-# Reprendre le Terminal N'est Pas un Jailbreak : Comment CAP Transforme le Contrôle en un Contrat Social Auditable
+# Prendre le contrôle du terminal n'est pas un jailbreak : comment CAP fait du contrôle un contrat social auditable
 
 Dans le discours public, la phrase « l'IA prend le contrôle du terminal » sonne comme une annonce de catastrophe.
 Parce que pour la plupart des gens, une seule image leur vient à l'esprit : tu t'endors et elle traite ton téléphone comme le sien ; tu ne regardes pas et elle traite ton ordinateur comme le sien ; tu ne l'as pas autorisée, mais elle peut tout de même « faire quelques choses au passage ».
@@ -114,7 +114,7 @@ Donc la conception de CAP doit être liée à un système de tutelle de niveau s
 Je ne m'oppose pas à ce que l'IA prenne le contrôle du terminal.
 Ce à quoi je m'oppose, c'est à « une reprise sans point d'imputation de responsabilité ».
 
-Reprendre le terminal n'est pas un jailbreak ; cela devrait ressembler à signer un contrat :
+Prendre le contrôle du terminal n'est pas un jailbreak ; cela devrait ressembler à la signature d'un contrat :
 avec des limites claires, auditable, révocable, traçable.
 
 Ce que CAP fait, c'est rendre le « contrat » exécutable au niveau du terminal.
@@ -142,7 +142,7 @@ C'est la condition de base pour que les services publics restent dignes de confi
 
 ---
 
-## 7. Conclusion : la Vraie Difficulté N'est Pas « Peut-Elle Reprendre » mais « Osons-Nous La Laisser Reprendre »
+## 7. Conclusion : la vraie difficulté n'est pas « peut-elle prendre le contrôle », mais « osons-nous la laisser faire »
 
 Techniquement, « reprendre le terminal » n'est pas un mystère.
 Ce qui est vraiment difficile, c'est : comment faire en sorte que la société ose confier le terminal.
