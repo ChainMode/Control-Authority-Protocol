@@ -19,7 +19,7 @@ Il n'est pas responsable de rendre l'IA plus intelligente ; il est seulement res
 
 ---
 
-## 1. La Responsabilité Unique de CAP dans l'Écosystème iFay : Vérification d'Autorisation et Gestion du Contrôle
+## 1. La responsabilité unique de CAP dans l'écosystème iFay : vérification d'autorisation et gestion du contrôle
 
 Le positionnement de CAP est sobre mais sans compromis :
 
@@ -37,7 +37,7 @@ Je l'appelle un « protocole de contrat social » parce qu'il transforme « peux
 
 ---
 
-## 2. Ce que CAP Ne Fait Pas Explicitement : Capacité, Identité et Intelligence Ne Sont Pas de Son Ressort
+## 2. Ce que CAP ne fait explicitement pas : capacité, identité et intelligence ne sont pas de son ressort
 
 Un protocole sain doit savoir ce qu'il ne fait pas ; sinon il devient une colle universelle qui finit par perdre le contrôle.
 
@@ -53,7 +53,7 @@ Plus la limite de responsabilité de CAP est claire, plus il peut devenir une in
 
 ---
 
-## 3. Pourquoi le « Contrôle » Doit Être Transformé en Protocole : Sinon la Responsabilité Ne Peut Jamais Être Tracée
+## 3. Pourquoi le « contrôle » doit devenir un protocole : sinon la responsabilité ne peut jamais être tracée
 
 La forme la plus courante d'autorisation aujourd'hui est :
 une appli affiche une boîte de dialogue, tu touches « Autoriser », et ensuite elle a une « permission à long terme ».
@@ -77,7 +77,7 @@ C'est la condition préalable à la « traçabilité de la responsabilité ».
 
 ---
 
-## 4. Hors Ligne d'Abord, En Ligne en Auxiliaire : le Réalisme de CAP
+## 4. Hors ligne d'abord, en ligne en appoint : le réalisme de CAP
 
 J'approuve fortement le principe de conception central de CAP : **hors ligne d'abord, en ligne en auxiliaire**.
 
@@ -99,7 +99,7 @@ la vie humaine n'est pas toujours en ligne.
 
 ---
 
-## 5. Le Point de Danger de CAP : Plus Il Se Rapproche du Terminal, Plus Il Doit Être Lié à un Système de Tutelle
+## 5. Le point de danger de CAP : plus il se rapproche du terminal, plus il doit être lié à un système de tutelle
 
 CAP lui-même n'est pas responsable de la « sémantique de tutelle ».
 Il ne répond qu'à « as-tu été autorisé à faire cette chose ».
@@ -121,7 +121,7 @@ Ce que CAP fait, c'est rendre le « contrat » exécutable au niveau du terminal
 
 ---
 
-## 6. Le Scénario coFay : le Contrôle pour les Rôles Publics Est Plus Sensible
+## 6. Le scénario coFay : le contrôle des rôles publics est plus sensible
 
 Lorsqu'iFay reprend ton terminal personnel, la responsabilité te revient.
 Lorsque coFay reprend des systèmes hospitaliers, des systèmes aéronautiques ou des systèmes gouvernementaux, la responsabilité revient aux organisations et aux postes publics.
@@ -164,6 +164,6 @@ Sinon, nous ne faisons qu'accélérer la création de la prochaine panique.
 
 ---
 
-## Documents Connexes
+## Documents connexes
 - CAP｜Positionnement et Périmètre du Protocole (Français) : https://ifay.ai/fr/docs/Control-Authority-Protocol/blueprint/01-Positionnement-et-Périmètre-du-Protocole
 - iFay｜Feuille de Route (EN) : https://ifay.ai/en/docs/iFay/blueprint/04-Roadmap

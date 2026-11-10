@@ -1,6 +1,6 @@
 <!-- Fecha de Actualización: 2026-05-27 -->
 
-# Tomar el Control del Terminal No Es Jailbreak: Cómo CAP Convierte el Control en un Contrato Social Auditable
+# Tomar el control del terminal no es jailbreak: cómo CAP convierte el control en un contrato social auditable
 
 En el discurso público, la frase "la IA toma el control del terminal" suena como un anuncio de desastre.
 Porque para la mayoría de las personas, solo viene a la mente una imagen: te quedas dormido y trata tu teléfono como si fuera suyo; no estás mirando y trata tu computadora como si fuera suya; no la has autorizado, pero igual puede "hacer algunas cosas de paso".
@@ -19,7 +19,7 @@ No es responsable de hacer que la IA sea más inteligente; solo es responsable d
 
 ---
 
-## 1. La Responsabilidad Única de CAP en el Ecosistema iFay: Verificación de Autorización y Gestión del Control
+## 1. La responsabilidad única de CAP en el ecosistema iFay: verificación de autorización y gestión del control
 
 El posicionamiento de CAP es contenido pero firme:
 
@@ -37,7 +37,7 @@ Lo llamo un "protocolo de contrato social" porque convierte el "puedes o no pued
 
 ---
 
-## 2. Lo que CAP Explícitamente No Hace: Capacidad, Identidad e Inteligencia No Están Bajo Su Jurisdicción
+## 2. Lo que CAP explícitamente no hace: capacidad, identidad e inteligencia no están bajo su jurisdicción
 
 Un protocolo saludable debe saber qué no hace; de lo contrario se convierte en un pegamento universal que finalmente pierde el control.
 
@@ -53,7 +53,7 @@ Cuanto más clara sea la frontera de responsabilidad de CAP, más podrá convert
 
 ---
 
-## 3. Por Qué el "Control" Debe Convertirse en Protocolo: De Lo Contrario, la Responsabilidad Nunca Puede Atravesarse
+## 3. Por qué el "control" debe convertirse en protocolo: de lo contrario, la responsabilidad nunca puede rastrearse
 
 La forma más común de autorización hoy es:
 una app emerge un cuadro de diálogo, tocas "Permitir", y luego tiene "permiso de largo plazo".
@@ -77,7 +77,7 @@ Esta es la condición previa para la "trazabilidad de la responsabilidad".
 
 ---
 
-## 4. Sin Conexión Primero, En Línea Auxiliar: el Realismo de CAP
+## 4. Primero sin conexión, en línea como apoyo: el realismo de CAP
 
 Estoy fuertemente de acuerdo con el principio de diseño central de CAP: **sin conexión primero, en línea auxiliar**.
 
@@ -99,7 +99,7 @@ la vida humana no está siempre en línea.
 
 ---
 
-## 5. El Punto de Peligro de CAP: Cuanto Más Cerca Está del Terminal, Más Debe Estar Atado a un Sistema de Tutela
+## 5. El punto de peligro de CAP: cuanto más cerca está del terminal, más debe estar atado a un sistema de tutela
 
 CAP en sí mismo no es responsable de la "semántica de tutela".
 Solo responde "¿se te ha permitido hacer esta cosa?".
@@ -121,7 +121,7 @@ Lo que CAP hace es hacer que el "contrato" sea ejecutable a nivel del terminal.
 
 ---
 
-## 6. El Escenario coFay: el Control para Roles Públicos Es Más Sensible
+## 6. El escenario coFay: el control de los roles públicos es más sensible
 
 Cuando iFay toma el control de tu terminal personal, la responsabilidad recae en ti.
 Cuando coFay toma el control de sistemas hospitalarios, sistemas de aviación o sistemas gubernamentales, la responsabilidad recae en organizaciones y puestos públicos.
@@ -142,7 +142,7 @@ Esta es la condición básica para que los servicios públicos sigan siendo conf
 
 ---
 
-## 7. Conclusión: La Verdadera Dificultad No Es "Si Puede Tomar el Control" sino "Si Nos Atrevemos a Dejar Que Tome el Control"
+## 7. Conclusión: la verdadera dificultad no es "si puede tomar el control", sino "si nos atrevemos a dejar que lo tome"
 
 Técnicamente, "tomar el control del terminal" no es un misterio.
 Lo realmente difícil es: ¿cómo haces que la sociedad se atreva a entregar el terminal?
@@ -164,6 +164,6 @@ De lo contrario, solo estamos acelerando hacia el próximo pánico.
 
 ---
 
-## Documentos Relacionados
+## Documentos relacionados
 - CAP｜Posicionamiento y Límites del Protocolo (Español): https://ifay.ai/es/docs/Control-Authority-Protocol/blueprint/01-Posicionamiento-y-Límites-del-Protocolo
 - iFay｜Hoja de Ruta (EN): https://ifay.ai/en/docs/iFay/blueprint/04-Roadmap
