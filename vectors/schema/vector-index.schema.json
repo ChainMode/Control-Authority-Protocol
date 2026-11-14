@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-authority-protocol.local/schemas/vector-index.draft.schema.json",
+  "title": "CAP draft vector index schema",
+  "description": "Schema for CAP draft vector index files. This schema validates vector metadata, not CAP protocol messages.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "metadata", "cases"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "cap-vector-index-draft-0"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "normative",
+        "scope",
+        "decision_dependencies",
+        "source_documents"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "draft"
+        },
+        "normative": {
+          "type": "boolean",
+          "const": false
+        },
+        "scope": {
+          "type": "string",
+          "const": "structure-only"
+        },
+        "decision_dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^D-[0-9]+$"
+          },
+          "uniqueItems": true
+        },
+        "source_documents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "message_type",
+          "assertion_type",
+          "expected",
+          "freezes_semantics",
+          "decision_fields_pending"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9]{3}-[a-z0-9-]+$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assertion_type": {
+            "type": "string",
+            "enum": ["json-parse-only", "envelope-shape-only"]
+          },
+          "expected": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["outcome"],
+            "properties": {
+              "outcome": {
+                "type": "string",
+                "enum": ["pass", "fail"]
+              }
+            }
+          },
+          "freezes_semantics": {
+            "type": "boolean",
+            "const": false
+          },
+          "decision_fields_pending": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^D-[0-9]+$"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
+}

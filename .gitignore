@@ -1,32 +1,25 @@
-# Dependencies
-node_modules/
+# === Default: ignore everything at root (keep process/governance files local) ===
+/*
 
-# OS files
+# === Public deliverables (docs, schema, vectors, and verification tests) ===
+!/docs/
+!/schema/
+!/vectors/
+!/tests/
+!/package.json
+!/pnpm-lock.yaml
+!/tsconfig.json
+!/vitest.config.ts
+!/README.md
+!/LICENSE
+!/.gitignore
+
+# === Exclude build/cache/OS noise inside allowed directories ===
 .DS_Store
-
-# IDE / Editor
-.kiro/
-
-# Temp files
-0
-
-# Build & Config (not tracked yet)
-package.json
-package-lock.json
-tsconfig.json
-vitest.config.ts
-tests/
-
-# === iAccord 过程工具：留本地，不进 github repo ===
-# 依据 PO 裁定 D-1 / D-2（2026-08-12）：
-#   D-1 = openspec 永久留本地、只供开发团队；docs/ 是唯一公开产物。
-#   D-2 = 全 15 仓统一忽略 openspec/ 与 .kiro/。
-# 亦为组织宪章 multi-repo-coordination「过程工具不进 github repo」的落地。
-# 公开产物保持不变：docs/、schema/、vectors/、README、LICENSE。
-# 注：.kiro/ 已在上方「IDE / Editor」段列出，此处不重复。
-openspec/
-.dev-os/
-.cursor/
-.githooks/
-decisions/
-AGENTS.md
+*.swp
+*.swo
+*~
+Thumbs.db
+node_modules/
+dist/
+coverage/

@@ -1,0 +1,38 @@
+{
+  "schema_version": "cap-vector-index-draft-0",
+  "metadata": {
+    "status": "draft",
+    "normative": false,
+    "scope": "structure-only",
+    "decision_dependencies": ["D-1", "D-4", "D-8", "D-9"],
+    "source_documents": [
+      "docs/en/specification/draft/faying-alignment/07-Followup-Plan-Schema-Vectors-RefImpl.md",
+      "docs/en/specification/draft/faying-alignment/08-PO-Decision-Brief.md",
+      "docs/en/specification/draft/faying-alignment/11-Protocol-Messages.md"
+    ]
+  },
+  "cases": [
+    {
+      "id": "001-auth-request-envelope",
+      "title": "AuthRequest envelope is valid JSON and names the draft message type",
+      "message_type": "AuthRequest",
+      "assertion_type": "envelope-shape-only",
+      "expected": {
+        "outcome": "pass"
+      },
+      "freezes_semantics": false,
+      "decision_fields_pending": ["D-1", "D-4"]
+    },
+    {
+      "id": "002-error-envelope",
+      "title": "Error envelope is valid JSON without choosing the canonical catch-all code",
+      "message_type": "Error",
+      "assertion_type": "envelope-shape-only",
+      "expected": {
+        "outcome": "pass"
+      },
+      "freezes_semantics": false,
+      "decision_fields_pending": ["D-8", "D-9"]
+    }
+  ]
+}
