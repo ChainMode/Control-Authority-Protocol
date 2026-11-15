@@ -1,0 +1,634 @@
+{
+  "suite": "cap-1.0-semantic-d1-d7",
+  "version": "1.0.0",
+  "status": "normative-draft",
+  "normative": true,
+  "scope": "d1-d7-semantic-conformance",
+  "trust_anchors": {
+    "key_trust_anchor_01": {
+      "algorithm": "Ed25519",
+      "public_key_raw_hex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+    }
+  },
+  "reference_manifest": {
+    "manifest_id": "mf_drone_001",
+    "driver_id": "drv_quadrotor_v1",
+    "version": "1.0.0",
+    "issued_at": "2026-11-15T00:00:00Z",
+    "signer_key_id": "key_trust_anchor_01",
+    "resources": [
+      {
+        "resource_id": "res_drone_fc",
+        "safe_states": [
+          {
+            "safe_state_id": "hover_and_rtl",
+            "description": "Hover in place then return to launch"
+          }
+        ],
+        "operations": [
+          {
+            "operation_id": "read_telemetry",
+            "mode": "read",
+            "criticality": "routine",
+            "consequence_irreversibility": "reversible",
+            "domain_category": "device_control"
+          },
+          {
+            "operation_id": "tune_pid",
+            "mode": "configure",
+            "criticality": "sensitive",
+            "consequence_irreversibility": "bounded_compensation",
+            "domain_category": "device_control"
+          },
+          {
+            "operation_id": "unlock_cargo_latch",
+            "mode": "execute",
+            "criticality": "sensitive",
+            "consequence_irreversibility": "irreversible_consequence",
+            "domain_category": "device_control"
+          },
+          {
+            "operation_id": "flash_esc_firmware",
+            "mode": "write",
+            "criticality": "high",
+            "consequence_irreversibility": "irreversible_data_or_hardware",
+            "domain_category": "firmware"
+          }
+        ]
+      },
+      {
+        "resource_id": "res_legacy_sensor",
+        "operations": [
+          {
+            "operation_id": "read_temp",
+            "mode": "read",
+            "criticality": "routine",
+            "consequence_irreversibility": "reversible",
+            "domain_category": "os_resource"
+          }
+        ]
+      }
+    ],
+    "signature_ed25519": "d3d0cc697776e732c6ec292551d1effa587102dc697ed99b61d65db2366e83dc00d3c1f528fa8e037915f006ae771e4c786b8f0495fc040cd1fc32d12f4d7d07"
+  },
+  "vectors": [
+    {
+      "id": "V01_ROUTINE_MODEL_B_G3_ALLOW",
+      "rule_refs": ["D-1", "D-2", "D-5"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v01",
+        "resource_id": "res_drone_fc",
+        "operation_id": "read_telemetry",
+        "requested_mode": "read",
+        "params": {},
+        "grant": {
+          "grant_id": "grt_v01",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["read"],
+          "min_grade": "G3",
+          "mandate_binding": {
+            "mandate_id": "mnd_v01",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["read"],
+            "session_grade": "G3",
+            "binding_model": "model_b_online_ref",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000
+          }
+        }
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "effective_criticality": "routine",
+        "effective_grade": "G3",
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V02_SENSITIVE_G3_CONFIGURE_DENY",
+      "rule_refs": ["D-2"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v02",
+        "resource_id": "res_drone_fc",
+        "operation_id": "tune_pid",
+        "requested_mode": "configure",
+        "params": { "kp": 1.2 },
+        "grant": {
+          "grant_id": "grt_v02",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["configure"],
+          "min_grade": "G3",
+          "mandate_binding": {
+            "mandate_id": "mnd_v02",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["configure"],
+            "session_grade": "G3",
+            "binding_model": "model_b_online_ref",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "sensitive",
+        "error_code": "E_GRADE_INSUFFICIENT",
+        "diagnostic_code": 2002,
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V03_HIGH_ESCALATED_G2_CONFIRMED_ALLOW",
+      "rule_refs": ["D-1", "D-2", "D-6", "D-7"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v03",
+        "resource_id": "res_drone_fc",
+        "operation_id": "unlock_cargo_latch",
+        "requested_mode": "execute",
+        "params": { "latch_id": "bay_alpha" },
+        "grant": {
+          "grant_id": "grt_v03",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["execute"],
+          "min_grade": "G2",
+          "mandate_binding": {
+            "mandate_id": "mnd_v03",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["execute"],
+            "session_grade": "G2",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        },
+        "human_confirmation": {
+          "confirmation_id": "cnf_v03",
+          "human_prime_id": "hid_aaaaaaaabbbbbbbbccccccccdddddddd",
+          "confirmed_params_sha256": "0beb72d16aa5320effde0346e45543a268f24473f72140a4374ddfd8e6e8fb8e",
+          "terminal_attested_disclosure": true,
+          "expires_at_epoch_ms": 1800000030000
+        }
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "effective_criticality": "high",
+        "effective_grade": "G2",
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V04_HIGH_MODEL_C_OFFLINE_DENY",
+      "rule_refs": ["D-1", "D-7"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v04",
+        "resource_id": "res_drone_fc",
+        "operation_id": "unlock_cargo_latch",
+        "requested_mode": "execute",
+        "params": { "latch_id": "bay_alpha" },
+        "grant": {
+          "grant_id": "grt_v04",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["execute"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v04",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["execute"],
+            "session_grade": "G1",
+            "binding_model": "model_c_offline_cache",
+            "online_fresh": false,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "high",
+        "error_code": "E_WEAK_MANDATE_BINDING",
+        "diagnostic_code": 2001,
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V05_HIGH_G1_MISSING_CONFIRMATION_DENY",
+      "rule_refs": ["D-6"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v05",
+        "resource_id": "res_drone_fc",
+        "operation_id": "unlock_cargo_latch",
+        "requested_mode": "execute",
+        "params": { "latch_id": "bay_alpha" },
+        "grant": {
+          "grant_id": "grt_v05",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["execute"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v05",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["execute"],
+            "session_grade": "G1",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "high",
+        "error_code": "E_CONFIRMATION_REQUIRED",
+        "diagnostic_code": 2006,
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V06_HIGH_PARAM_TAMPER_CONFIRMATION_DENY",
+      "rule_refs": ["D-6"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v06",
+        "resource_id": "res_drone_fc",
+        "operation_id": "unlock_cargo_latch",
+        "requested_mode": "execute",
+        "params": { "latch_id": "bay_bravo_tampered" },
+        "grant": {
+          "grant_id": "grt_v06",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["execute"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v06",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["execute"],
+            "session_grade": "G1",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        },
+        "human_confirmation": {
+          "confirmation_id": "cnf_v06",
+          "human_prime_id": "hid_aaaaaaaabbbbbbbbccccccccdddddddd",
+          "confirmed_params_sha256": "0beb72d16aa5320effde0346e45543a268f24473f72140a4374ddfd8e6e8fb8e",
+          "terminal_attested_disclosure": true,
+          "expires_at_epoch_ms": 1800000030000
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "high",
+        "error_code": "E_CONFIRMATION_REQUIRED",
+        "diagnostic_code": 2006,
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V07_CRITICAL_ESCALATED_DOWNGRADE_CLAMPED_G1_ALLOW",
+      "rule_refs": ["D-1", "D-2", "D-5", "D-6", "D-7"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v07",
+        "resource_id": "res_drone_fc",
+        "operation_id": "flash_esc_firmware",
+        "requested_mode": "write",
+        "caller_criticality_override": "routine",
+        "params": {
+          "image_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_bank": 0
+        },
+        "grant": {
+          "grant_id": "grt_v07",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["write"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v07",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["write"],
+            "session_grade": "G1",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        },
+        "human_confirmation": {
+          "confirmation_id": "cnf_v07",
+          "human_prime_id": "hid_aaaaaaaabbbbbbbbccccccccdddddddd",
+          "confirmed_params_sha256": "93d07a398b33b7f5f2098f7bf74b60298005cd08489289f5258d26ce066ac38e",
+          "terminal_attested_disclosure": true,
+          "expires_at_epoch_ms": 1800000030000
+        }
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "effective_criticality": "critical",
+        "effective_grade": "G1",
+        "escalation_clamped": true
+      }
+    },
+    {
+      "id": "V08_CRITICAL_G2_DENY",
+      "rule_refs": ["D-2", "D-7"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v08",
+        "resource_id": "res_drone_fc",
+        "operation_id": "flash_esc_firmware",
+        "requested_mode": "write",
+        "params": {
+          "image_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_bank": 0
+        },
+        "grant": {
+          "grant_id": "grt_v08",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["write"],
+          "min_grade": "G2",
+          "mandate_binding": {
+            "mandate_id": "mnd_v08",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["write"],
+            "session_grade": "G2",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        },
+        "human_confirmation": {
+          "confirmation_id": "cnf_v08",
+          "human_prime_id": "hid_aaaaaaaabbbbbbbbccccccccdddddddd",
+          "confirmed_params_sha256": "93d07a398b33b7f5f2098f7bf74b60298005cd08489289f5258d26ce066ac38e",
+          "terminal_attested_disclosure": true,
+          "expires_at_epoch_ms": 1800000030000
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "critical",
+        "error_code": "E_GRADE_INSUFFICIENT",
+        "diagnostic_code": 2002,
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V09_UNKNOWN_OPERATION_CRITICAL_DENY",
+      "rule_refs": ["D-5"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v09",
+        "resource_id": "res_drone_fc",
+        "operation_id": "undeclared_self_destruct",
+        "requested_mode": "execute",
+        "params": {},
+        "grant": {
+          "grant_id": "grt_v09",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["execute"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v09",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["execute"],
+            "session_grade": "G1",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "critical",
+        "error_code": "E_UNKNOWN_OPERATION",
+        "diagnostic_code": 2004,
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V10_UNTRUSTED_MANIFEST_SIGNATURE_DENY",
+      "rule_refs": ["D-5"],
+      "use_reference_manifest": false,
+      "manifest_tamper_signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "request_overrides": {
+        "request_id": "req_v10",
+        "resource_id": "res_drone_fc",
+        "operation_id": "read_telemetry",
+        "requested_mode": "read",
+        "params": {},
+        "grant": {
+          "grant_id": "grt_v10",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["read"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v10",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["read"],
+            "session_grade": "G1",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "critical",
+        "error_code": "E_UNTRUSTED_MANIFEST",
+        "diagnostic_code": 2005,
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V11_FUND_TRANSFER_OUT_OF_SCOPE_DENY",
+      "rule_refs": ["D-7"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v11",
+        "resource_id": "res_drone_fc",
+        "operation_id": "read_telemetry",
+        "requested_mode": "read",
+        "domain_category": "fund_transfer",
+        "params": { "amount": 100 },
+        "grant": {
+          "grant_id": "grt_v11",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["read"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v11",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["read"],
+            "session_grade": "G1",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "critical",
+        "error_code": "E_OUT_OF_SCOPE_FUND_TRANSFER",
+        "diagnostic_code": 2007,
+        "escalation_clamped": false
+      }
+    },
+    {
+      "id": "V12_G0_OVERRIDE_WITH_SAFE_STATE",
+      "rule_refs": ["D-3"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v12",
+        "resource_id": "res_drone_fc",
+        "operation_id": "read_telemetry",
+        "requested_mode": "read",
+        "g0_override": true,
+        "params": {},
+        "grant": {
+          "grant_id": "grt_v12",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["read"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v12",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["read"],
+            "session_grade": "G1",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "routine",
+        "error_code": "E_G0_EMERGENCY_OVERRIDE",
+        "diagnostic_code": 2003,
+        "escalation_clamped": false,
+        "safe_state_directive": {
+          "action": "enter_safe_state",
+          "safe_state_id": "hover_and_rtl",
+          "blocks_human_takeover": false
+        }
+      }
+    },
+    {
+      "id": "V13_G0_OVERRIDE_WITHOUT_SAFE_STATE",
+      "rule_refs": ["D-3"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v13",
+        "resource_id": "res_legacy_sensor",
+        "operation_id": "read_temp",
+        "requested_mode": "read",
+        "params": {},
+        "grant": {
+          "grant_id": "grt_v13",
+          "resource_id": "res_legacy_sensor",
+          "allowed_modes": ["read"],
+          "min_grade": "G1",
+          "mandate_binding": {
+            "mandate_id": "mnd_v13",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_legacy_sensor",
+            "allowed_modes": ["read"],
+            "session_grade": "G0",
+            "binding_model": "model_a_plus_b",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1800000060000,
+            "model_a_derived_proof_valid": true
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "routine",
+        "error_code": "E_G0_EMERGENCY_OVERRIDE",
+        "diagnostic_code": 2003,
+        "escalation_clamped": false,
+        "safe_state_directive": {
+          "action": "terminate_and_alert",
+          "blocks_human_takeover": false
+        }
+      }
+    },
+    {
+      "id": "V14_EXPIRED_MANDATE_DENY",
+      "rule_refs": ["D-1"],
+      "use_reference_manifest": true,
+      "request_overrides": {
+        "request_id": "req_v14",
+        "resource_id": "res_drone_fc",
+        "operation_id": "read_telemetry",
+        "requested_mode": "read",
+        "params": {},
+        "grant": {
+          "grant_id": "grt_v14",
+          "resource_id": "res_drone_fc",
+          "allowed_modes": ["read"],
+          "min_grade": "G3",
+          "mandate_binding": {
+            "mandate_id": "mnd_v14",
+            "fay_id": "ifay_aaaaaaaabbbbbbbbccccccccdddddddd",
+            "resource_id": "res_drone_fc",
+            "allowed_modes": ["read"],
+            "session_grade": "G3",
+            "binding_model": "model_b_online_ref",
+            "online_fresh": true,
+            "revoked": false,
+            "expires_at_epoch_ms": 1799999990000
+          }
+        }
+      },
+      "expected": {
+        "decision": "DENY",
+        "effective_criticality": "routine",
+        "error_code": "E_MANDATE_INVALID",
+        "diagnostic_code": 2008,
+        "escalation_clamped": false
+      }
+    }
+  ]
+}

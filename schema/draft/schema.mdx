@@ -1,6 +1,33 @@
-# Control Authority Protocol Schema (Draft)
+---
+title: CAP 1.0 数据模型与 Schema（草案）
+description: Control Authority Protocol (CAP) 1.0 CDDL、JSON Schema 与 TypeScript 类型映射说明
+---
 
+# CAP 1.0 数据模型与 Schema（草案）
 
+本目录提供 CAP 1.0 草案阶段的 JSON Schema（`schema.json`）与 TypeScript 类型定义（`schema.ts`），与仓库根目录 `schemas/cap-1.0.cddl` 保持字段同构。
 
+## 核心结构总览
 
+| 结构 | 职责 | 对应安全规则 |
+|------|------|-------------|
+| `DriverCapabilityManifest` | 经可信公钥 Ed25519 签名的终端/驱动能力清单，声明操作基础危险度、后果不可逆性与安全态 | D-3, D-5, D-7 |
+| `CapGrant` & `MandateEvidence` | 携带最小要求等级 `min_grade` 及 Faying Mandate 绑定模型证据（Model B 在线引用 / Model A+B 会话派生证明） | D-1, D-2, D-4 |
+| `HumanConfirmationProof` | 人类原型显式确认证明，绑定请求参数的规范化 SHA-256 摘要与宿主终端披露证明 | D-6 |
+| `CapEvaluationRequest` | 默认拒绝评估器的单次完整评估输入 | D-1..D-7 |
+| `CapDecision` & `G0SafeStateDirective` | 确定性判定输出、规范错误码（`E_*`）、数值诊断伴随码（`2001`–`2099`）及 `G0` 紧急接管安全态指令 | D-3, D-8, D-9 |
 
+## 错误码与数值诊断伴随码映射
+
+| 线格式错误码 | 诊断码 | 触发条件 |
+|-------------|--------|----------|
+| `E_WEAK_MANDATE_BINDING` | `2001` | `high`/`critical` 操作使用了纯离线缓存（Model C）或缺少 Model A+B 双重证明 |
+| `E_GRADE_INSUFFICIENT` | `2002` | 当前有效 Faying 等级或访问模式不满足 `grade × mode × criticality` 矩阵 |
+| `E_G0_EMERGENCY_OVERRIDE` | `2003` | 人类原型触发 `G0` 紧急接管，立即拒绝 Fay 操作并输出安全态指令 |
+| `E_UNKNOWN_OPERATION` | `2004` | 资源或操作未在已验签 `DriverCapabilityManifest` 中声明（默认归为 `critical` 拒绝） |
+| `E_UNTRUSTED_MANIFEST` | `2005` | 驱动能力清单缺少有效 Ed25519 签名或信任锚校验失败 |
+| `E_CONFIRMATION_REQUIRED` | `2006` | `high`/`critical` 操作缺少未过期的参数绑定显式人类原型确认或终端披露证明 |
+| `E_OUT_OF_SCOPE_FUND_TRANSFER` | `2007` | 请求涉及金融资金划转（`fund_transfer`），超出 CAP 1.0 协议范围 |
+| `E_MANDATE_INVALID` | `2008` | Mandate 已过期、已撤销、离线非新鲜，或主体/资源/访问模式不匹配 |
+| `E_PROTOCOL_VERSION_UNSUPPORTED` | `2098` | 不支持的 CAP 协议版本 |
+| `E_PROTOCOL` | `2099` | 协议层结构兜底错误（兼容输入别名 `E_INVALID_MESSAGE`） |

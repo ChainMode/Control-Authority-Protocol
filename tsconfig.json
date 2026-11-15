@@ -13,5 +13,5 @@
     "sourceMap": true,
     "outDir": "./dist"
   },
-  "include": ["tests/**/*.ts", "vitest.config.ts"]
+  "include": ["src/**/*.ts", "schema/**/*.ts", "tests/**/*.ts", "vitest.config.ts"]
 }

@@ -4,6 +4,8 @@
 # === Public deliverables (docs, schema, vectors, and verification tests) ===
 !/docs/
 !/schema/
+!/schemas/
+!/src/
 !/vectors/
 !/tests/
 !/package.json

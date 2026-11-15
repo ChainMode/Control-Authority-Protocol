@@ -1,0 +1,134 @@
+; Control Authority Protocol (CAP) 1.0 Normative Wire & Data Model (CDDL)
+; Aligned with ADR 0001 (D-1..D-7) and ADR 0002 (D-4, D-8..D-12)
+
+cap-protocol-version = "1.0"
+
+faying-grade = "G0" / "G1" / "G2" / "G3" / "G4"
+grant-min-grade = "G1" / "G2" / "G3" / "G4"
+access-mode = "read" / "write" / "execute" / "configure"
+criticality = "routine" / "sensitive" / "high" / "critical"
+
+consequence-irreversibility =
+  "reversible"
+  / "bounded_compensation"
+  / "irreversible_consequence"
+  / "irreversible_data_or_hardware"
+
+domain-category =
+  "device_control"
+  / "os_resource"
+  / "communication"
+  / "storage"
+  / "firmware"
+  / "fund_transfer"
+
+mandate-binding-model =
+  "model_a_plus_b"
+  / "model_b_online_ref"
+  / "model_c_offline_cache"
+
+cap-error-code =
+  "E_WEAK_MANDATE_BINDING"
+  / "E_GRADE_INSUFFICIENT"
+  / "E_G0_EMERGENCY_OVERRIDE"
+  / "E_UNKNOWN_OPERATION"
+  / "E_UNTRUSTED_MANIFEST"
+  / "E_CONFIRMATION_REQUIRED"
+  / "E_OUT_OF_SCOPE_FUND_TRANSFER"
+  / "E_MANDATE_INVALID"
+  / "E_PROTOCOL_VERSION_UNSUPPORTED"
+  / "E_PROTOCOL"
+
+safe-state-descriptor = {
+  safe_state_id: tstr,
+  ? description: tstr,
+}
+
+operation-descriptor = {
+  operation_id: tstr,
+  mode: access-mode,
+  criticality: criticality,
+  consequence_irreversibility: consequence-irreversibility,
+  ? domain_category: domain-category,
+  ? description: tstr,
+}
+
+resource-capability-descriptor = {
+  resource_id: tstr,
+  ? safe_states: [* safe-state-descriptor],
+  operations: [+ operation-descriptor],
+}
+
+driver-capability-manifest = {
+  manifest_id: tstr,
+  driver_id: tstr,
+  version: tstr,
+  issued_at: tstr,
+  signer_key_id: tstr,
+  resources: [+ resource-capability-descriptor],
+  ? signature_ed25519: tstr,
+}
+
+mandate-evidence = {
+  mandate_id: tstr,
+  fay_id: tstr,
+  resource_id: tstr,
+  allowed_modes: [+ access-mode],
+  session_grade: faying-grade,
+  binding_model: mandate-binding-model,
+  online_fresh: bool,
+  revoked: bool,
+  expires_at_epoch_ms: uint,
+  ? model_a_derived_proof_valid: bool,
+}
+
+cap-grant = {
+  grant_id: tstr,
+  resource_id: tstr,
+  allowed_modes: [+ access-mode],
+  min_grade: grant-min-grade,
+  ? criticality_override: criticality,
+  mandate_binding: mandate-evidence,
+}
+
+human-confirmation-proof = {
+  confirmation_id: tstr,
+  human_prime_id: tstr,
+  confirmed_params_sha256: tstr,
+  terminal_attested_disclosure: bool,
+  expires_at_epoch_ms: uint,
+}
+
+cap-evaluation-request = {
+  protocol_version: tstr,
+  request_id: tstr,
+  fay_id: tstr,
+  resource_id: tstr,
+  operation_id: tstr,
+  requested_mode: access-mode,
+  params: { * tstr => any },
+  ? domain_category: domain-category,
+  ? caller_criticality_override: criticality,
+  ? g0_override: bool,
+  now_epoch_ms: uint,
+  manifest: driver-capability-manifest,
+  grant: cap-grant,
+  ? human_confirmation: human-confirmation-proof,
+}
+
+g0-safe-state-directive = {
+  action: "enter_safe_state" / "terminate_and_alert",
+  ? safe_state_id: tstr,
+  blocks_human_takeover: false,
+}
+
+cap-decision = {
+  decision: "ALLOW" / "DENY",
+  effective_criticality: criticality,
+  ? effective_grade: faying-grade,
+  escalation_clamped: bool,
+  ? error_code: cap-error-code,
+  ? diagnostic_code: uint,
+  ? reason: tstr,
+  ? safe_state_directive: g0-safe-state-directive,
+}
