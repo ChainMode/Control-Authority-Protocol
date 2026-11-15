@@ -1,11 +1,12 @@
 # === Default: ignore everything at root (keep process/governance files local) ===
 /*
 
-# === Public deliverables (docs, schema, vectors, and verification tests) ===
+# === Public deliverables (docs, schema, vectors, reference implementations, and verification tests) ===
 !/docs/
 !/schema/
 !/schemas/
 !/src/
+!/reference-impls/
 !/vectors/
 !/tests/
 !/package.json
@@ -25,3 +26,4 @@ Thumbs.db
 node_modules/
 dist/
 coverage/
+reference-impls/rust/target/

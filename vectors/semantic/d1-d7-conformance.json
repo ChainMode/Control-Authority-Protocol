@@ -1,7 +1,7 @@
 {
   "suite": "cap-1.0-semantic-d1-d7",
   "version": "1.0.0",
-  "status": "normative-draft",
+  "status": "final",
   "normative": true,
   "scope": "d1-d7-semantic-conformance",
   "trust_anchors": {

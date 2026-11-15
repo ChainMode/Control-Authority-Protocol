@@ -114,15 +114,21 @@ describe('CAP 1.0 Error Alias & Dual-Schema Parity (D-8, D-9, D-10)', () => {
     expect(res.diagnostic_code).toBe(2098);
   });
 
-  it('keeps schemas/cap-1.0.cddl and schema/draft/schema.json aligned on core types and error codes', () => {
+  it('keeps schemas/cap-1.0.cddl, schemas/cap-1.0.json, and schema/2025-10-25/schema.json aligned on core types and error codes', () => {
     const cddl = readFileSync(resolve(ROOT, 'schemas/cap-1.0.cddl'), 'utf8');
-    const jsonSchema = JSON.parse(
-      readFileSync(resolve(ROOT, 'schema/draft/schema.json'), 'utf8'),
+    const frozenJsonSchema = JSON.parse(
+      readFileSync(resolve(ROOT, 'schemas/cap-1.0.json'), 'utf8'),
     );
-    const errorEnum: string[] = jsonSchema.$defs.CapErrorCode.enum;
+    const editionJsonSchema = JSON.parse(
+      readFileSync(resolve(ROOT, 'schema/2025-10-25/schema.json'), 'utf8'),
+    );
+    expect(frozenJsonSchema.$defs.ProtocolVersion.const).toBe('1.0');
+    expect(editionJsonSchema).toEqual(frozenJsonSchema);
+    const errorEnum: string[] = frozenJsonSchema.$defs.CapErrorCode.enum;
     for (const code of errorEnum) {
       expect(cddl).toContain(`"${code}"`);
     }
+    expect(cddl).toContain('cap-protocol-version = "1.0"');
     expect(cddl).toContain('driver-capability-manifest');
     expect(cddl).toContain('cap-evaluation-request');
     expect(cddl).toContain('g0-safe-state-directive');

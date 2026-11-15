@@ -1,6 +1,6 @@
-export * from '../schema/draft/schema';
+export * from '../schema/2025-10-25/schema';
 
-import type { CapErrorCode } from '../schema/draft/schema';
+import type { CapErrorCode } from '../schema/2025-10-25/schema';
 
 export interface TrustAnchorEntry {
   algorithm: 'Ed25519';
@@ -23,7 +23,7 @@ export const DIAGNOSTIC_CODES: Record<CapErrorCode, number> = {
 };
 
 /**
- * Normalizes legacy error aliases (`E_INVALID_MESSAGE`) to canonical `E_PROTOCOL` (ADR D-9).
+ * Normalizes legacy error aliases (`E_INVALID_MESSAGE`) to canonical `E_PROTOCOL`.
  */
 export function normalizeProtocolErrorCode(code: string): CapErrorCode {
   if (code === 'E_INVALID_MESSAGE') {

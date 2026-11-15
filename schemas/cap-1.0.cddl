@@ -1,7 +1,12 @@
 ; Control Authority Protocol (CAP) 1.0 Normative Wire & Data Model (CDDL)
-; Aligned with ADR 0001 (D-1..D-7) and ADR 0002 (D-4, D-8..D-12)
+; Edition: 2025-10-25 | Status: Final | Protocol Version: "1.0" (two-segment MAJOR.MINOR)
 
 cap-protocol-version = "1.0"
+
+cap-protocol-descriptor = {
+  name: "CAP",
+  version: cap-protocol-version,
+}
 
 faying-grade = "G0" / "G1" / "G2" / "G3" / "G4"
 grant-min-grade = "G1" / "G2" / "G3" / "G4"
@@ -93,14 +98,15 @@ cap-grant = {
 
 human-confirmation-proof = {
   confirmation_id: tstr,
-  human_prime_id: tstr,
-  confirmed_params_sha256: tstr,
+  human_prime_id: tstr .regexp "^hid_[a-z2-7]{16,}$",
+  confirmed_params_sha256: tstr .regexp "^[0-9a-f]{64}$",
   terminal_attested_disclosure: bool,
   expires_at_epoch_ms: uint,
 }
 
 cap-evaluation-request = {
-  protocol_version: tstr,
+  protocol_version: cap-protocol-version,
+  ? protocol: cap-protocol-descriptor,
   request_id: tstr,
   fay_id: tstr,
   resource_id: tstr,

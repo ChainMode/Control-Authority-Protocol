@@ -1,6 +1,305 @@
-{}
-
-
-
-
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ifay.ai/schemas/cap-1.0.json",
+  "title": "Control Authority Protocol (CAP) 1.0 Normative Schema",
+  "description": "Frozen CAP 1.0 JSON Schema (Edition 2025-10-25) isomorphic with schemas/cap-1.0.cddl for CAP D-1..D-7 evaluation requests, signed driver capability manifests, Faying Mandate bindings, parameter-bound Human Prime confirmations, and safe-state decisions.",
+  "$defs": {
+    "ProtocolVersion": {
+      "type": "string",
+      "const": "1.0",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+      "description": "Two-segment CAP protocol version MAJOR.MINOR (no PATCH segment). Frozen at \"1.0\" for CAP 1.0."
+    },
+    "ProtocolDescriptor": {
+      "type": "object",
+      "required": ["name", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "const": "CAP"
+        },
+        "version": {
+          "$ref": "#/$defs/ProtocolVersion"
+        }
+      }
+    },
+    "FayingGrade": {
+      "type": "string",
+      "enum": ["G0", "G1", "G2", "G3", "G4"]
+    },
+    "GrantMinGrade": {
+      "type": "string",
+      "enum": ["G1", "G2", "G3", "G4"]
+    },
+    "AccessMode": {
+      "type": "string",
+      "enum": ["read", "write", "execute", "configure"]
+    },
+    "Criticality": {
+      "type": "string",
+      "enum": ["routine", "sensitive", "high", "critical"]
+    },
+    "ConsequenceIrreversibility": {
+      "type": "string",
+      "enum": [
+        "reversible",
+        "bounded_compensation",
+        "irreversible_consequence",
+        "irreversible_data_or_hardware"
+      ]
+    },
+    "DomainCategory": {
+      "type": "string",
+      "enum": [
+        "device_control",
+        "os_resource",
+        "communication",
+        "storage",
+        "firmware",
+        "fund_transfer"
+      ]
+    },
+    "MandateBindingModel": {
+      "type": "string",
+      "enum": [
+        "model_a_plus_b",
+        "model_b_online_ref",
+        "model_c_offline_cache"
+      ]
+    },
+    "CapErrorCode": {
+      "type": "string",
+      "enum": [
+        "E_WEAK_MANDATE_BINDING",
+        "E_GRADE_INSUFFICIENT",
+        "E_G0_EMERGENCY_OVERRIDE",
+        "E_UNKNOWN_OPERATION",
+        "E_UNTRUSTED_MANIFEST",
+        "E_CONFIRMATION_REQUIRED",
+        "E_OUT_OF_SCOPE_FUND_TRANSFER",
+        "E_MANDATE_INVALID",
+        "E_PROTOCOL_VERSION_UNSUPPORTED",
+        "E_PROTOCOL"
+      ]
+    },
+    "SafeStateDescriptor": {
+      "type": "object",
+      "required": ["safe_state_id"],
+      "additionalProperties": false,
+      "properties": {
+        "safe_state_id": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" }
+      }
+    },
+    "OperationDescriptor": {
+      "type": "object",
+      "required": [
+        "operation_id",
+        "mode",
+        "criticality",
+        "consequence_irreversibility"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation_id": { "type": "string", "minLength": 1 },
+        "mode": { "$ref": "#/$defs/AccessMode" },
+        "criticality": { "$ref": "#/$defs/Criticality" },
+        "consequence_irreversibility": {
+          "$ref": "#/$defs/ConsequenceIrreversibility"
+        },
+        "domain_category": { "$ref": "#/$defs/DomainCategory" },
+        "description": { "type": "string" }
+      }
+    },
+    "ResourceCapabilityDescriptor": {
+      "type": "object",
+      "required": ["resource_id", "operations"],
+      "additionalProperties": false,
+      "properties": {
+        "resource_id": { "type": "string", "minLength": 1 },
+        "safe_states": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SafeStateDescriptor" }
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/OperationDescriptor" }
+        }
+      }
+    },
+    "DriverCapabilityManifest": {
+      "type": "object",
+      "required": [
+        "manifest_id",
+        "driver_id",
+        "version",
+        "issued_at",
+        "signer_key_id",
+        "resources"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "manifest_id": { "type": "string", "minLength": 1 },
+        "driver_id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "issued_at": { "type": "string", "minLength": 1 },
+        "signer_key_id": { "type": "string", "minLength": 1 },
+        "resources": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/ResourceCapabilityDescriptor" }
+        },
+        "signature_ed25519": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{128}$"
+        }
+      }
+    },
+    "MandateEvidence": {
+      "type": "object",
+      "required": [
+        "mandate_id",
+        "fay_id",
+        "resource_id",
+        "allowed_modes",
+        "session_grade",
+        "binding_model",
+        "online_fresh",
+        "revoked",
+        "expires_at_epoch_ms"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "mandate_id": { "type": "string", "minLength": 1 },
+        "fay_id": { "type": "string", "minLength": 1 },
+        "resource_id": { "type": "string", "minLength": 1 },
+        "allowed_modes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/AccessMode" }
+        },
+        "session_grade": { "$ref": "#/$defs/FayingGrade" },
+        "binding_model": { "$ref": "#/$defs/MandateBindingModel" },
+        "online_fresh": { "type": "boolean" },
+        "revoked": { "type": "boolean" },
+        "expires_at_epoch_ms": { "type": "integer", "minimum": 0 },
+        "model_a_derived_proof_valid": { "type": "boolean" }
+      }
+    },
+    "CapGrant": {
+      "type": "object",
+      "required": [
+        "grant_id",
+        "resource_id",
+        "allowed_modes",
+        "min_grade",
+        "mandate_binding"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "grant_id": { "type": "string", "minLength": 1 },
+        "resource_id": { "type": "string", "minLength": 1 },
+        "allowed_modes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/AccessMode" }
+        },
+        "min_grade": { "$ref": "#/$defs/GrantMinGrade" },
+        "criticality_override": { "$ref": "#/$defs/Criticality" },
+        "mandate_binding": { "$ref": "#/$defs/MandateEvidence" }
+      }
+    },
+    "HumanConfirmationProof": {
+      "type": "object",
+      "required": [
+        "confirmation_id",
+        "human_prime_id",
+        "confirmed_params_sha256",
+        "terminal_attested_disclosure",
+        "expires_at_epoch_ms"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "confirmation_id": { "type": "string", "minLength": 1 },
+        "human_prime_id": {
+          "type": "string",
+          "pattern": "^hid_[a-z2-7]{16,}$"
+        },
+        "confirmed_params_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "terminal_attested_disclosure": { "type": "boolean" },
+        "expires_at_epoch_ms": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "CapEvaluationRequest": {
+      "type": "object",
+      "required": [
+        "protocol_version",
+        "request_id",
+        "fay_id",
+        "resource_id",
+        "operation_id",
+        "requested_mode",
+        "params",
+        "now_epoch_ms",
+        "manifest",
+        "grant"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": { "$ref": "#/$defs/ProtocolVersion" },
+        "protocol": { "$ref": "#/$defs/ProtocolDescriptor" },
+        "request_id": { "type": "string", "minLength": 1 },
+        "fay_id": { "type": "string", "minLength": 1 },
+        "resource_id": { "type": "string", "minLength": 1 },
+        "operation_id": { "type": "string", "minLength": 1 },
+        "requested_mode": { "$ref": "#/$defs/AccessMode" },
+        "params": { "type": "object" },
+        "domain_category": { "$ref": "#/$defs/DomainCategory" },
+        "caller_criticality_override": { "$ref": "#/$defs/Criticality" },
+        "g0_override": { "type": "boolean" },
+        "now_epoch_ms": { "type": "integer", "minimum": 0 },
+        "manifest": { "$ref": "#/$defs/DriverCapabilityManifest" },
+        "grant": { "$ref": "#/$defs/CapGrant" },
+        "human_confirmation": { "$ref": "#/$defs/HumanConfirmationProof" }
+      }
+    },
+    "G0SafeStateDirective": {
+      "type": "object",
+      "required": ["action", "blocks_human_takeover"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["enter_safe_state", "terminate_and_alert"]
+        },
+        "safe_state_id": { "type": "string", "minLength": 1 },
+        "blocks_human_takeover": { "const": false }
+      }
+    },
+    "CapDecision": {
+      "type": "object",
+      "required": [
+        "decision",
+        "effective_criticality",
+        "escalation_clamped"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "decision": { "type": "string", "enum": ["ALLOW", "DENY"] },
+        "effective_criticality": { "$ref": "#/$defs/Criticality" },
+        "effective_grade": { "$ref": "#/$defs/FayingGrade" },
+        "escalation_clamped": { "type": "boolean" },
+        "error_code": { "$ref": "#/$defs/CapErrorCode" },
+        "diagnostic_code": { "type": "integer", "minimum": 2000, "maximum": 2099 },
+        "reason": { "type": "string" },
+        "safe_state_directive": { "$ref": "#/$defs/G0SafeStateDirective" }
+      }
+    }
+  },
+  "$ref": "#/$defs/CapEvaluationRequest"
+}
