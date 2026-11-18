@@ -1,5 +1,10 @@
 # Control Authority Protocol (CAP)
 
+[![Docs CI](https://github.com/ChainMode/Control-Authority-Protocol/actions/workflows/docs-ci.yml/badge.svg)](https://github.com/ChainMode/Control-Authority-Protocol/actions/workflows/docs-ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](./LICENSE-DOCS)
+[![Website: ifay.ai](https://img.shields.io/badge/Website-ifay.ai-blue)](https://ifay.ai)
+
 **Protocol Version**: `CAP/1.0` (`"1.0"`) · **Specification Status**: `Final` (`2025-10-25`)
 
 The **Control Authority Protocol (CAP)** defines the default-deny authorization and safety gate governing how a digital avatar (`iFay` or `coFay`) safely acquires, exercises, and relinquishes control over an inhabited **Host** (strictly a physical terminal device, actuator peripheral, or client software application) under verifiable authority delegated by a **Human Prime**.

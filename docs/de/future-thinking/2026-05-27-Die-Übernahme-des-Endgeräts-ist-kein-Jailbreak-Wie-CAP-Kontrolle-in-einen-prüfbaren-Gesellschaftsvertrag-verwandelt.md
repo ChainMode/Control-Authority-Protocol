@@ -165,5 +165,5 @@ Sonst beschleunigen wir nur, die nächste Panik zu erzeugen.
 ---
 
 ## Verwandte Dokumente
-- CAP｜Protokollpositionierung und Grenzen (Deutsch): https://ifay.ai/de/docs/Control-Authority-Protocol/blueprint/01-Protokollpositionierung-und-Grenzen
+- [CAP｜Protokollpositionierung und Grenzen (Deutsch)](../blueprint/01-Protokollpositionierung%20und%20Grenzen.md)
 - iFay｜Roadmap (EN): https://ifay.ai/en/docs/iFay/blueprint/04-Roadmap

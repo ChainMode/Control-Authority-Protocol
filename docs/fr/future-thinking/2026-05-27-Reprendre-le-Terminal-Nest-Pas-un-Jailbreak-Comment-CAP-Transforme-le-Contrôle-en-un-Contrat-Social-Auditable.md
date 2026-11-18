@@ -165,5 +165,5 @@ Sinon, nous ne faisons qu'accélérer la création de la prochaine panique.
 ---
 
 ## Documents connexes
-- CAP｜Positionnement et Périmètre du Protocole (Français) : https://ifay.ai/fr/docs/Control-Authority-Protocol/blueprint/01-Positionnement-et-Périmètre-du-Protocole
+- [CAP｜Positionnement et Périmètre du Protocole (Français)](../blueprint/01-Positionnement%20et%20périmètre%20du%20protocole.md)
 - iFay｜Feuille de Route (EN) : https://ifay.ai/en/docs/iFay/blueprint/04-Roadmap

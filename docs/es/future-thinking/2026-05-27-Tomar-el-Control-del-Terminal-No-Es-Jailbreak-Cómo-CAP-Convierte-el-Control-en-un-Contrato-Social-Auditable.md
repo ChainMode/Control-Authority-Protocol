@@ -165,5 +165,5 @@ De lo contrario, solo estamos acelerando hacia el próximo pánico.
 ---
 
 ## Documentos relacionados
-- CAP｜Posicionamiento y Límites del Protocolo (Español): https://ifay.ai/es/docs/Control-Authority-Protocol/blueprint/01-Posicionamiento-y-Límites-del-Protocolo
+- [CAP｜Posicionamiento y Límites del Protocolo (Español)](../blueprint/01-Posicionamiento%20y%20Límites%20del%20Protocolo.md)
 - iFay｜Hoja de Ruta (EN): https://ifay.ai/en/docs/iFay/blueprint/04-Roadmap

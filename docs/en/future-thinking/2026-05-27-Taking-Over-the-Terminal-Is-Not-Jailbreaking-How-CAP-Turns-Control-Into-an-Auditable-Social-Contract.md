@@ -165,5 +165,5 @@ Otherwise we are merely accelerating toward the next panic.
 ---
 
 ## Related Documents
-- CAP | Protocol Positioning and Boundaries (English): https://ifay.ai/en/docs/Control-Authority-Protocol/blueprint/01-Protocol-Positioning-and-Boundaries
+- [CAP | Protocol Positioning and Boundaries (English)](../blueprint/01-Protocol%20Positioning%20and%20Boundaries.md)
 - iFay | Roadmap (EN): https://ifay.ai/en/docs/iFay/blueprint/04-Roadmap
